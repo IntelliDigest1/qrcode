@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./App.css";
 import QRCode from "qrcode";
 import { QrReader } from "react-qr-reader";
@@ -12,10 +12,10 @@ import Button from "@mui/material/Button";
 function App() {
   const [link, setLink] = useState("");
   const [imageURL, setImageURL] = useState("");
-  const [errorType, setErrorType] = useState("");
-  // const [scanResultFile, setScanResultFile] = useState("");
+  const [errorType, setErrorType] = useState();
+  const [scanResultFile, setScanResultFile] = useState("");
   const [scanResultWebCam, setScanResultWebCam] = useState("");
-  // const qrRef = useRef(null);
+  const qrRef = useRef(null);
 
   const generateQrCode = async () => {
     try {
@@ -50,6 +50,10 @@ function App() {
       setErrorType(error);
     }
   };
+
+  useEffect(() => {
+    console.log(errorType);
+  });
 
   return (
     <Container className="container">
@@ -96,7 +100,7 @@ function App() {
                 Scan Qr Code
               </Button>
               <QrReader
-                ref={qrRef}
+                // ref={qrRef}
                 scanDelay={300}
                 style={{ width: "100%", border: "solid 2px #a8a7a7" }}
                 onResult={handleScanFile}
